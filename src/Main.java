@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 
 public class Main {
     public static void main(String[] args){
@@ -33,9 +35,9 @@ public class Main {
            }
         }
         //Sampa i filtrati per eta
-        for (Dipendente d : filtratiEta){
-            System.out.println(d.getNome()+" "+d.getEta());
-        }
+//        for (Dipendente d : filtratiEta){
+//            System.out.println(d.getNome()+" "+d.getEta());
+//        }
 
         List<Dipendente> filtratiStip = new ArrayList<>();
         FiltroDipendente filtroStip = x -> x.getStipendio()>1800;
@@ -45,8 +47,28 @@ public class Main {
             }
         }
         //Stampiamo i filtrati per sitpendio
-        for (Dipendente d : filtratiStip){
-            System.out.println(d.getNome()+" "+d.getStipendio());
+//        for (Dipendente d : filtratiStip){
+//            System.out.println(d.getNome()+" "+d.getStipendio());
+//        }
+
+        //      ORDINAMENTO PER NOME con REFERENCE
+        dipendenti.sort(Comparator.comparing(Dipendente::getNome, String.CASE_INSENSITIVE_ORDER));
+        for (Dipendente d : dipendenti){
+            System.out.println(d.getNome());
+        }
+
+        //      CONSTRUCTOR REFERENE:CREAZIONE LISTA DIPENDENTI A PARTIRE DA LISTA NOMI
+        List<Dipendente> dipendenti_2 = new ArrayList<>();
+        List<String> listaNomi = List.of("Mirko", "Giacomo", "Giovanna", "Marta");
+        Function<String, Dipendente> creaDipendente = Dipendente::new;
+        for (String nome : listaNomi){
+            Dipendente dipendenteTemp;
+            dipendenteTemp = creaDipendente.apply(nome);
+            dipendenti_2.add(dipendenteTemp);
+        }
+        //Stampa della nuova lista
+        for(Dipendente d : dipendenti_2){
+            System.out.println(d.getNome());
         }
 
     }

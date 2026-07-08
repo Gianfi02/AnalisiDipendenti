@@ -12,6 +12,13 @@ public class Dipendente {
         this.dipartimento = dipartimento;
     }
 
+    //costruttore overload per usare constructor reference con solo il nome
+    public Dipendente(String nome){
+        this.nome = nome;
+        this.eta = 0;
+        this.stipendio = 0.0;
+    }
+
     //METODI GETTER
     public String getNome(){
         return nome;
