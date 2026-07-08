@@ -1,7 +1,8 @@
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args){
@@ -70,6 +71,31 @@ public class Main {
         for(Dipendente d : dipendenti_2){
             System.out.println(d.getNome());
         }
+
+        System.out.println("\n\nSTREAM\n");
+
+         //         UTILIZZO DI STREAM
+        //Creazione Stream
+        //1.
+        Stream<Dipendente> dipendentiStream_1 = dipendenti.stream();
+        dipendentiStream_1
+                .filter(dipendente -> dipendente.getStipendio()>2000)
+                .sorted(Comparator.comparing(Dipendente::getEta))
+                .forEach(dipendente -> System.out.println(dipendente.getNome()));
+
+        System.out.println("\n\nMedia Stipendi\n");
+        //Caloliamo la media stipendi
+        double mediaStipendi = dipendenti.stream().mapToDouble(Dipendente::getStipendio).average().orElse(0.0);
+        System.out.println(mediaStipendi);
+
+        //Creiamo una map dove per ogni Dipartimento sono legati i dipendenti
+        Map<Dipartimento, List<Dipendente>> mapDipendenti = dipendenti.stream().collect(Collectors.groupingBy(Dipendente::getDipartimento));
+        System.out.println("\n\nDipendenti per ogni dipartiemnto\n");
+        //Stampiamo il map
+        mapDipendenti.forEach(((dipartimento, listaDipendenti) -> {
+            System.out.println("\n"+dipartimento+": ");
+            listaDipendenti.forEach(dipendente -> System.out.println(dipendente.getNome()));
+        }));
 
     }
 }
